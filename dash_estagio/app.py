@@ -12,7 +12,7 @@ DB_HOST     = "bigdata.dataiesb.com"
 DB_PORT     = 5432
 DB_NAME     = "iesb"
 DB_USER     = "data_iesb"
-DB_PASSWORD = "iesb"
+DB_PASSWORD = os.getenv("DB_PASSWORD", "")
 
 SCHEMA = "public"
 TABLE  = "sus_aih"
