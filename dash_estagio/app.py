@@ -1,10 +1,10 @@
 # app.py
+import os                          # <- adicione essa linha aqui
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from sqlalchemy import create_engine, text
 from dash import Dash, dcc, html, Input, Output, dash_table
-
 # =========================================================
 # CONFIG BANCO
 # =========================================================
