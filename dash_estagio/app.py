@@ -312,7 +312,15 @@ def q_top(where, params, col="qtd_total"):
 # =========================================================
 # DADOS INICIAIS
 # =========================================================
-ANO_MIN, ANO_MAX, ANOS_LISTA, UFS, REGS = get_filters()
+try:
+    ANO_MIN, ANO_MAX, ANOS_LISTA, UFS, REGS = get_filters()
+except Exception as e:
+    print(f"[AVISO] Falha ao carregar filtros iniciais: {e}")
+    ANO_MIN     = 2018
+    ANO_MAX     = 2026
+    ANOS_LISTA  = list(range(2018, 2027))
+    UFS         = ["NA"]
+    REGS        = ["NA"]
 
 ANO_OPT = [{"label": str(a), "value": a} for a in ANOS_LISTA]
 UF_OPT  = [{"label": "TODAS", "value": "TODAS"}] + [{"label": u, "value": u} for u in UFS]
@@ -860,7 +868,10 @@ def atualizar(anos, meses, regiao, uf, indicador):
 # RUN
 # =========================================================
 if __name__ == "__main__":
-    with engine.connect() as conn:
-        conn.execute(text("SELECT 1"))
-        print("✅  Conexão com PostgreSQL OK.")
+    try:
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+            print("✅  Conexão com PostgreSQL OK.")
+    except Exception as e:
+        print(f"[AVISO] Banco indisponível: {e}")
     app.run(debug=False, host="0.0.0.0", port=8050)
